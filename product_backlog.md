@@ -18,9 +18,12 @@ For teachers to store mark related info about their students.
 
 # Product Backlog
 - Set up environment
+
 - Figure out data representation
+
     - Students
-        - Name (first and last)
+        - first_name: str
+        - last_name: str
         - Gender
         - Image
         - Student number
