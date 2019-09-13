@@ -3,7 +3,6 @@ import pytest
 import markbook
 
 
-
 def test_create_assigment():
     assignment1 = markbook.create_assignment(name="Assignment One",
                                             due="2019-09-21",
@@ -65,12 +64,37 @@ def test_add_student_to_classroom():
                                           teacher="Mr. Gallo")
     student = {"first_name": "John", "last_name": "Smith"}
 
-<<<<<<< HEAD
-def test_can_test_markbook():
-    assert markbook.some_func() is True
-=======
     assert len(classroom["student_list"]) == 0
     markbook.add_student_to_classroom(student, classroom)
     assert type(classroom["student_list"]) is list
     assert len(classroom["student_list"]) == 1
->>>>>>> d699dcf43068c13a8239824c3e102f956c61175a
+
+
+
+@pytest.mark.skip
+def test_remove_student_from_classroom():
+    """
+    Dependencies:
+        - create_classroom()
+        - add_student_to_classroom()
+    """
+    classroom = markbook.create_classroom(course_code="ICS4U",
+                                          course_name="Computer Science",
+                                          period=2,
+                                          teacher="Mr. Gallo")
+    student = {"first_name": "John", "last_name": "Smith"}
+
+     markbook.add_student_to_classroom(student, classroom)
+    assert len(classroom["student_list"]) == 1
+    markbook.remove_student_from_classroom(student, classroom)
+    assert type(classroom["student_list"]) is list
+    assert len(classroom["student_list"]) == 0
+
+
+@pytest.mark.skip
+def test_edit_student():
+    student = {"first_name": "John", "last_name": "Smith", "grade": 10}
+    markbook.edit_student(student, first_name="Frank", last_name="Bell")
+    assert student["first_name"] == "Frank"
+    assert student["last_name"] == "Bell"
+    assert student["grade"] == 10
