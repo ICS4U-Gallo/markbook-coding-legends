@@ -3,7 +3,7 @@ import pytest
 import markbook
 
 
-@pytest.mark.skip
+
 def test_create_assigment():
     assignment1 = markbook.create_assignment(name="Assignment One",
                                             due="2019-09-21",
