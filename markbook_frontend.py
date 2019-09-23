@@ -1,7 +1,4 @@
-import os 
 import json
-import pprint
-import time
 
 def initialize_session(parser_obj_shell):
     print("""--New Session-- \n \n
