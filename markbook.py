@@ -22,7 +22,8 @@ def create_assignment(name: str, due: str, points: int) -> Dict:
 
 def create_classroom(course_code: str, course_name: str, period: int, teacher: str) -> Dict:
     """Creates a classroom dictionary"""
-    return {}
+    classroom = {"course_code": course code, "course_name": course_name, "period": period, "teacher": teacher}
+    return classroom
 
 
 def calculate_average_mark(student: Dict) -> float:
@@ -31,6 +32,8 @@ def calculate_average_mark(student: Dict) -> float:
 
 def add_student_to_classroom(student, classroom):
     """Adds student to a classroom
+    classroom["student_list"].append(student)
+    
 
     Args:
         student: Student dict
