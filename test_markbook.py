@@ -56,7 +56,7 @@ def test_create_classroom():
     assert classroom["assignment_list"] == []
 
 
-@pytest.mark.skip
+#@pytest.mark.skip
 def test_calculate_average_mark():
     student = {
         "assignment_list": [{"name": "markbook", "points": 25}]
@@ -66,11 +66,11 @@ def test_calculate_average_mark():
         {'name': "markbook", "points": 50}
     ]
 
-    assert markbook.calculate_average_mark(student) == .5
+    classroom = {"assignment_list": assignments}
+
+    assert markbook.calculate_average_mark(student,classroom) == .5
    
-
-
-@pytest.mark.skip
+#@pytest.mark.skip
 def test_add_student_to_classroom():
     """
     Dependencies:
@@ -89,7 +89,7 @@ def test_add_student_to_classroom():
 
 
 
-@pytest.mark.skip
+#@pytest.mark.skip
 def test_remove_student_from_classroom():
     """
     Dependencies:
@@ -109,7 +109,7 @@ def test_remove_student_from_classroom():
     assert len(classroom["student_list"]) == 0
 
 
-@pytest.mark.skip
+#@pytest.mark.skip
 def test_edit_student():
     student = {"first_name": "John", "last_name": "Smith", "grade": 10}
     markbook.edit_student(student, first_name="Frank", last_name="Bell")
