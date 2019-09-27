@@ -84,7 +84,7 @@ def test_remove_student_from_classroom():
                                           teacher="Mr. Gallo")
     student = {"first_name": "John", "last_name": "Smith"}
 
-     markbook.add_student_to_classroom(student, classroom)
+    markbook.add_student_to_classroom(student, classroom)
     assert len(classroom["student_list"]) == 1
     markbook.remove_student_from_classroom(student, classroom)
     assert type(classroom["student_list"]) is list
