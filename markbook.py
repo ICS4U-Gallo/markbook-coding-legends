@@ -4,6 +4,22 @@ Group members: Alex, Aryan, Ryan
 """
 from typing import Dict
 
+def create_student(first_name: str, last_name: str) -> Dict:
+    """Create student information represented in a dictionary
+
+    Args:
+        first_name: first name of the student
+        last_name: last name of the student
+    Returns:
+        Student information as a dictionary
+    """
+    student = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "assignment_list": []
+    }
+
+    return student
 
 def create_assignment(name: str, due: str, points: int) -> Dict:
     """Creates an assignment represented as a dictionary
@@ -34,7 +50,21 @@ def create_classroom(course_code: str, course_name: str, period: int, teacher: s
 
 def calculate_average_mark(student: Dict) -> float:
     """Calculates the average mark of a student"""
-    return 0
+    
+    sum = 0
+    for i in range(len(student["assignment_list"])):
+
+        student_dictionary = student["assignment_list"][i]
+
+        marks = student_dictionary["points"]
+        out_of = classroom["assignment_list"][i][]
+
+        percentage = mark / out_of
+        sum += percentage
+    
+    average = sum/len(assignment_list)
+        
+    return average
 
 def add_student_to_classroom(student, classroom):
     #Adds student to a classroom
