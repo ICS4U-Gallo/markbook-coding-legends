@@ -3,6 +3,18 @@ import pytest
 import markbook
 
 
+def test_create_student():
+
+    expected = {
+        "first_name": "test_name",
+        "last_name": "test_name",
+        "assignment_list": []
+    }
+
+    student = markbook.create_student("test_name","test_name")
+
+    assert expected == student
+
 def test_create_assigment():
     assignment1 = markbook.create_assignment(name="Assignment One",
                                             due="2019-09-21",
@@ -47,9 +59,15 @@ def test_create_classroom():
 @pytest.mark.skip
 def test_calculate_average_mark():
     student = {
-        "marks": [50, 100]
+        "assignment_list": [{"name": "markbook", "points": 25}]
     }
-    assert markbook.calculate_average_mark(student) == 75.0
+
+    assignments = [
+        {'name': "markbook", "points": 50}
+    ]
+
+    assert markbook.calculate_average_mark(student) == .5
+   
 
 
 @pytest.mark.skip
