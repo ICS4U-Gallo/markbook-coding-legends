@@ -2,6 +2,7 @@
 Markbook Application
 Group members: Alex, Aryan, Ryan
 """
+
 from typing import Dict
 
 def create_student(first_name: str, last_name: str) -> Dict:
@@ -48,23 +49,20 @@ def create_classroom(course_code: str, course_name: str, period: int, teacher: s
     return classroom
 
 
-def calculate_average_mark(student: Dict) -> float:
+def calculate_average_mark(student: Dict, classroom: Dict) -> float:
     """Calculates the average mark of a student"""
     
     sum = 0
-    for i in range(len(student["assignment_list"])):
+    length = len(student["assignment_list"])
 
-        student_dictionary = student["assignment_list"][i]
+    for i in range(length):
 
-        marks = student_dictionary["points"]
-        out_of = classroom["assignment_list"][i][]
+        numerator = student["assignment_list"][i]["points"]
+        denumerator = classroom["assignment_list"][i]["points"]
 
-        percentage = mark / out_of
-        sum += percentage
-    
-    average = sum/len(assignment_list)
-        
-    return average
+        sum += numerator / denumerator
+
+    return sum / length
 
 def add_student_to_classroom(student, classroom):
     #Adds student to a classroom
