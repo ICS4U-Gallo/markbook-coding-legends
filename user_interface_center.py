@@ -3,6 +3,8 @@ from data_managment_methods import *
 import time
 import os
 
+clear = lambda: os.system("clear")
+
 class user_interface_controller:
 	"""Class obj that interacts with the user to fufill requests"""
 
@@ -25,8 +27,8 @@ class user_interface_controller:
 	def add_student(self):
 		fields = []
 
-		fields.append(input("Student First Name.....  "))
-		fields.append(input("Student Last Name.....  "))
+		fields.append(input("\nStudent First Name.....  "))
+		fields.append(input("\nStudent Last Name.....  "))
 
 		student = create_student(fields[0], fields[1])
 
@@ -39,19 +41,21 @@ class user_interface_controller:
 
 	def remove_student(self):
 		
+		def temp_func(first_name, last_name):
+			for student in self.data["student_list"]:
+				if student["first_name"] == fields[0] and student["last_name"] == fields[1]:
+					remove_student_from_classroom(student, self.data)
+					return True
 		while True:
 
 			fields = []
-		
+
+			
 			fields.append(input("Student First Name.... "))
 			fields.append(input("Student Last Name.... "))
 
-			for student in self.data["student_list"]:
-
-				if student["first_name"] == fields[0] and student["last_name"] == fields[1]:
-					remove_student_from_classroom(student, self.data)
-
-					break
+			if temp_func(fields[0], fields[1]) is True:
+				break
 
 	def add_assignment(self):
 		fields = []
@@ -65,22 +69,36 @@ class user_interface_controller:
 		self.data["assignment_list"].append(temp_assignnment)
 
 	def calculate_student_avg(self):
-		
-		while True:
-			fields = []
-
-			fields.append(input("Student First Name -->"))
-			fields.append(input("Student Last Name -->"))
-
+		def temp_func(first_name, last_name):
 			for student in self.data["student_list"]:
 
-				if fields[0] == student["first_name"] and fields[1] == student["last_name"]:
-					print(calculate_average_mark(student, self.data))
-					break
+					if first_name == student["first_name"] and last_name == student["last_name"]:
+						msg = "\nRyan has a %s avg" % calculate_average_mark(student, self.data)
+						print(msg)
+						break
+		while True:
+
+			if self.data["student_list"] == []:
+				break
+
+			fields = []
+			print("\nTo leave this menu enter \"leave\".")
+
+			fields.append(input("\nStudent First Name -->"))
 			
+			if fields[-1] == "leave" or fields[-1] == "Leave":
+				break
+
+			fields.append(input("\nStudent Last Name -->"))
+
+			if fields[-1] == "leave" or fields[-1] == "Leave":
+				break
+
+			if temp_func(fields[0], fields[1]) is True:
+				break		
+		
 			else:
 				print("Student not found, please try again....")
-				time.sleep(1)
 
 	def generate_student_report(self):
 		fields = []
@@ -146,21 +164,3 @@ class user_interface_controller:
 		else:
 			print("Unknown command..... \n")
 			self.help()
-
-session_data, filename = initialize_session()
-
-usr_interface = user_interface_controller(session_data, filename)
-
-print(" \n Type \"help\" and press Enter to see command list. \n")
-
-while True:
-
-	user_input = input()
-
-	user_input = user_input.lower()
-
-	if user_input == "exit":
-		usr_interface.update("save")
-		break
-
-	usr_interface.update(user_input)
