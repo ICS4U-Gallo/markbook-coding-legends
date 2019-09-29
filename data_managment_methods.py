@@ -3,6 +3,8 @@ import time
 import json
 from markbook import *
 
+clear = lambda: os.system("clear")
+
 def initialize_session():
 	"""Either creates a classroom, or loads a previous one from a json file
 
@@ -14,12 +16,17 @@ def initialize_session():
 		-A dictionary of all the working classroom data
 	"""
 
+	clear()
+
 	while True:
 
-		req = input("Do you want to load previous session \"open\", \"create\" create a new classroom, \"list\" all classes, or \"remove\".....  ")
+		req = input("""\nWould you like to \"create\" a new classroom.
+Open a pre-existing one with \"open\".
+Delete a pre-existing class with \"remove\".
+Or \"list\" all existing classrooms......  """)
 
 		if req == "open" or req == "Open":
-			filename = input("What is the courses\' code......  ") + ".json"
+			filename = input("\nWhat is the courses\' code......  ") + ".json"
 
 			try:
 				class_data = load_classroom_data(filename), filename
@@ -37,7 +44,7 @@ def initialize_session():
 			return classroom, filename
 
 		elif req == "list" or req == "List":
-			
+
 			if os.listdir("classes") == []:
 				print("\nThere are no files to delete\n")
 
@@ -45,7 +52,7 @@ def initialize_session():
 				for f in os.listdir("classes"):
 					
 					slice_range = len(f) - 5 #slicing off the .json (char length of 5)
-					print(f"\n-{f[0:slice_range]}\n")
+					print(f"\n-{f[0:slice_range]}")
 
 		elif req == "remove" or req == "Remove":
 			
@@ -88,22 +95,22 @@ def initialize_markbook(filename):
 		-A dictionary of classroom data
 	"""
 
-	wait_seconds = .5
+	wait_seconds = 0
 
-	print("Initializing Markbook, fill in requests fields.")
+	print("\nInitializing Markbook, fill in requests fields.")
 	time.sleep(wait_seconds)
 
-	teacher = input("Teacher -->  ")
+	teacher = input("\nTeacher...  ")
 	time.sleep(wait_seconds)
 
-	course_code = input("Course Code -->  ")
+	course_code = input("\nCourse Code...  ")
 	time.sleep(wait_seconds)
 
-	course_name = input("Course Name -->  ")
+	course_name = input("\nCourse Name...  ")
 	time.sleep(wait_seconds)
 
-	period = input("What period is it -->  ")
-	time.sleep(wait_seconds + 2)
+	period = input("\nWhat period is it...  ")
+	time.sleep(wait_seconds)
 
 	classroom = create_classroom(course_code, course_name, period, teacher)
 
@@ -130,14 +137,3 @@ def load_classroom_data(filename):
 		return json.load(json_file)
 
 def save_classroom_data(filename, data):
-	"""Saves classroom data
-
-	Args:
-		filename
-		data -> Dict
-	"""
-
-	path = "classes/%s" % (filename)
-
-	with open(path,"w") as f:
-		json.dump(data, f)
