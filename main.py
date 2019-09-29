@@ -5,11 +5,13 @@ session_data, filename = initialize_session()
 
 usr_interface = user_interface_controller(session_data, filename)
 
-print(" \n Type \"help\" and press Enter to see command list. \n")
+msg = "\nNow interacting with %s, enter \"help\" for the list of commands\n" % (session_data["course_code"])
+
+print(msg)
 
 while True:
 
-	user_input = input()
+	user_input = input("\n")
 
 	user_input = user_input.lower()
 
