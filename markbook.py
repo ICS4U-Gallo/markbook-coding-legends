@@ -36,7 +36,6 @@ def create_assignment(name: str, due: str, points: int) -> Dict:
             "due": due,
             "points": points}
 
-
 def create_classroom(course_code: str, course_name: str, period: int, teacher: str) -> Dict:
     """Creates a classroom dictionary"""
     classroom = {"course_code": course_code,
@@ -48,27 +47,30 @@ def create_classroom(course_code: str, course_name: str, period: int, teacher: s
                 }
     return classroom
 
-
 def calculate_average_mark(student: Dict, classroom: Dict) -> float:
     """Calculates the average mark of a student"""
     
     sum = 0
     length = len(student["assignment_list"])
 
-    for i in range(length):
+    if length is not 0:
+            
+        for i in range(length):
 
-        numerator = student["assignment_list"][i]["points"]
-        denumerator = classroom["assignment_list"][i]["points"]
+            numerator = student["assignment_list"][i]["points"]
+            denumerator = classroom["assignment_list"][i]["points"]
 
-        sum += numerator / denumerator
+            sum += numerator / denumerator
 
-    return sum / length
+        return sum / length
 
-def add_student_to_classroom(student, classroom):
+    else:
+        return -1
+        
+def add_student_to_classroom(student: Dict, classroom: Dict):
     #Adds student to a classroom
     classroom["student_list"].append(student)
     pass
-   
 
 def remove_student_from_classroom(student: Dict, classroom: Dict):
     """Removes student from classroom
@@ -81,7 +83,7 @@ def remove_student_from_classroom(student: Dict, classroom: Dict):
     pass
 
 
-def edit_student(student: Dict, **kwargs: Dict):
+def edit_student(classroom: Dict, **kwargs: Dict):
     """Edits the student's info with the provided key/value pairs
     
     Args:
