@@ -24,8 +24,10 @@ def initialize_session():
 Open a pre-existing one with \"open\".
 Delete a pre-existing class with \"remove\".
 Or \"list\" all existing classrooms......  """)
-
-		if req == "open" or req == "Open":
+		
+		req.lower()
+		
+		if req == "open":
 			filename = input("\nWhat is the courses\' code......  ") + ".json"
 
 			try:
@@ -35,7 +37,7 @@ Or \"list\" all existing classrooms......  """)
 			except:
 				print("\nUnable to find the course code.....\n") 
 
-		elif req == "create" or req == "Create":
+		elif req == "create":
 
 			filename = input("\nWhat is the course code of the classroom you would like to create......  ") + ".json"
 
@@ -43,38 +45,46 @@ Or \"list\" all existing classrooms......  """)
 			
 			return classroom, filename
 
-		elif req == "list" or req == "List":
+		elif req == "list":
 
 			if os.listdir("classes") == []:
 				print("\nThere are no files to delete\n")
 
 			else:
-				for f in os.listdir("classes"):
+				for file_name in os.listdir("classes"):
 					
 					slice_range = len(f) - 5 #slicing off the .json (char length of 5)
-					print(f"\n-{f[0:slice_range]}")
+					msg = "-%s" % (file_name[0:slice_range])
+					print(msg)
 
-		elif req == "remove" or req == "Remove":
+		elif req == "remove":
 			
 			while True:
 				
 				req = input("\nTo leave this action enter \"exit\", select a filename for deletion, or \"list\" to see all classes...\n\n")
-
+					
+				req.lower()
 				
-				if req == "exit" or req == "Exit":
+				#If the user requests to exit, break from the loop
+				if req == "exit":
 					break 
 
+				#If there are no classroom (.json) files, notify the user, and stop looping
 				elif os.listdir("classes") ==  []:
-					print("No files to remove......")
+					print("\nNo files to remove......")
+					break
 	
-				elif req == "list" or req == "List":
-					for f in os.listdir("classes"):
+				#List out all possible user choices for file deletion
+				elif req == "list":
+					for file_name in os.listdir("classes"):
 						slice_range = len(f) - 5 #slicing off the .json (char length of 5)
-						print(f"\n-{f[0:slice_range]}")
-
+						msg = "-%s" % (file_name)
+						print(msg)
+				#If not breaking, or listing assume the user has entered his desired file for deletion
 				else:
 					filename = "%s.json" % (req)
-
+				
+				#If the requested file is in the file, deleted it
 					if filename in os.listdir("classes"):
 					
 						remove_path = "classes/%s" % (filename)
@@ -82,6 +92,12 @@ Or \"list\" all existing classrooms......  """)
 						os.remove(remove_path)
 
 						print("removed " + req)
+					
+				#If the file requested does not exit, notify the user, and resume looping.
+					else:
+						print("\nNo such file exits for deletion, try again")
+			
+		#If the user hasn't chosen to list, delete, create, or open then notify the user, and requests again (looping)
 		else:
 			print("Error - unknown request, enter either \"open\", \"create\", \"list\", or \"remove\".")
 
@@ -94,7 +110,8 @@ def initialize_markbook(filename):
 	Returns:
 		-A dictionary of classroom data
 	"""
-
+	
+	#For smoother user experience, between each info request the program can wait.
 	wait_seconds = 0
 
 	print("\nInitializing Markbook, fill in requests fields.")
