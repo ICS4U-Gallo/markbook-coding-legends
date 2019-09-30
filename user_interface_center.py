@@ -51,8 +51,8 @@ class user_interface_controller:
 			fields = []
 
 			
-			fields.append(input("Student First Name.... "))
-			fields.append(input("Student Last Name.... "))
+			fields.append(input("\nStudent First Name.... "))
+			fields.append(input("\nStudent Last Name.... "))
 
 			if temp_func(fields[0], fields[1]) is True:
 				break
@@ -60,9 +60,9 @@ class user_interface_controller:
 	def add_assignment(self):
 		fields = []
 
-		fields.append(input("Name of the assignemnt -->"))
-		fields.append(input("Due date -->"))
-		fields.append(input("Points the assignemnt is out of -->"))
+		fields.append(input("\nName of the assignemnt -->"))
+		fields.append(input("\nDue date -->"))
+		fields.append(input("\nPoints the assignemnt is out of -->"))
 
 		temp_assignnment = create_assignment(fields[0],fields[1],fields[2])
 
@@ -70,6 +70,16 @@ class user_interface_controller:
 
 	def calculate_student_avg(self):
 		def temp_func(first_name, last_name):
+			""" A temp function used for breaking from a nested for loop, within a while loop
+			
+			Args:
+				-fist_name
+				-second_name
+			
+			Returns:
+				boolean for breaking
+				"""
+			
 			for student in self.data["student_list"]:
 
 					if first_name == student["first_name"] and last_name == student["last_name"]:
@@ -77,36 +87,38 @@ class user_interface_controller:
 						print(msg)
 						break
 		while True:
-
+			
+			#If the user cannot pick a student, because non exist, break from the loop
 			if self.data["student_list"] == []:
 				break
 
 			fields = []
-			print("\nTo leave this menu enter \"leave\".")
+			print("\nTo leave this menu enter \"exit\".")
 
+			
 			fields.append(input("\nStudent First Name -->"))
 			
-			if fields[-1] == "leave" or fields[-1] == "Leave":
+			#The user can enter a exit command to leave at any time.
+			if fields[-1] == "exit" or fields[-1] == "exit":
 				break
 
 			fields.append(input("\nStudent Last Name -->"))
 
-			if fields[-1] == "leave" or fields[-1] == "Leave":
+			if fields[-1] == "exit" or fields[-1] == "leave":
 				break
-
+			
+			#To check for student existance, a nested for loop prevents breaking from inside the second layer
 			if temp_func(fields[0], fields[1]) is True:
 				break		
 		
 			else:
 				print("Student not found, please try again....")
-
-	def generate_student_report(self):
-		fields = []
-
-		fields.append(input("Student First Name -->"))
-		fields.append(input("Student Last Name -->"))
-
+				
 	def edit_student_info(self):
+		"""Edits a specified student's info using key/value input pairs
+		Args:
+			-None
+		"""
 		fields = []
 
 		fields.append(input("Student First name -->  "))
@@ -128,12 +140,20 @@ class user_interface_controller:
 				print("invalid \'key\', please try \'fist_name\', or \'last_name\'.")
 
 	def show_students(self):
-
+		"""Prints every student within the present student list (self.data["student_list"])"""
+		
 		for student in self.data["student_list"]:
 
 			print("\n",student["first_name"], student["last_name"])
 
 	def update(self, cmd):
+		"""Used to route the general input stream into the user_interface_center 
+		Args:
+			-user command -> cmd
+		
+		Returns:
+			-None
+		"""
 
 		if cmd == "help":
 			self.help()
