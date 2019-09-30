@@ -20,6 +20,7 @@ class user_interface_controller:
 		--> add-student
 		--> remove-student
 		--> add-assignment
+		--> add-student-mark
 		--> calculate-student-avg
 		--> show-students
 		--> edit-student-info\n""")
@@ -68,6 +69,56 @@ class user_interface_controller:
 
 		self.data["assignment_list"].append(temp_assignnment)
 
+	def add_student_mark(self):
+		def temp_func(first_name, last_name):
+
+			i = 0
+
+			for student in self.data["student_list"]:
+				
+				if student["first_name"] == first_name and student["last_name"] == last_name:
+					return i, True 
+				i += 1
+
+			else:
+				return -1, False
+		
+		def temp_func1(assignment_name, student):
+			
+			i = 0
+
+			for task in student["assignment_list"]:
+				if task["name"] == assignment_name:
+					return i, True
+				i += 1
+			
+			else:
+				return -1, False
+			
+			
+		while True:
+
+			fields = []
+
+			fields.append(input("\nStudent's first name...  "))
+			fields.append(input("\nStudent's last name... "))
+			fields.append(input("\nFor what assignment...  "))
+			fields.append(input("\nWhat mark his he/she recieve...  "))
+		
+			student_index, boolean = temp_func(fields[0],fields[1])
+
+			if boolean is True:
+				
+				assignment_index, boolean = temp_func1(fields[2])
+				
+				if boolean is True:
+					add_student_mark(self.data["student_list"][student_index]["assignemnt_list"][assignment_index])
+				
+				else:
+					print("\nThe assignment's name does not exist...en")
+			else:
+				print("\nThat student does not exist...")
+	
 	def calculate_student_avg(self):
 		def temp_func(first_name, last_name):
 			""" A temp function used for breaking from a nested for loop, within a while loop
@@ -126,12 +177,12 @@ class user_interface_controller:
 
 		while True:
 
-			key = input("What about the student are you altering?..... \n >fist_name..... \n >last_name......")
+			key = input("What about the student are you altering? first_name? Or last_name......")
 			value = input("What do you want it to be changed too.....")
 
 			for i in range(len(self.data["student_list"])):
 
-				if self.data["student_list"][i]["first_name"] == fields[0] and student["student_list"][i]["last_name"] == fields[1]:
+				if self.data["student_list"][i]["first_name"] == fields[0] and self.data["student_list"][i]["last_name"] == fields[1]:
 					edit_student(self.data["student_list"][i], key, value)
 					
 					break
@@ -175,6 +226,9 @@ class user_interface_controller:
 
 		elif cmd == "edit-student-info":
 			self.edit_student_info()
+
+		elif cmd == "add-student-mark":
+			self.add_student_info()
 
 		elif cmd == "save":
 			save_classroom_data(self.filename, self.data)
