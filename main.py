@@ -1,26 +1,111 @@
-from data_managment_methods import initialize_session
-from user_interface_center import user_interface_controller
+"""
+Markbook Application
+Group members: Alex, Aryan, Ryan
+"""
 
-#Run initialization functions, reading, writing, or removing class files.
-session_data, filename = initialize_session()
+from typing import Dict
 
-#Initialize the user input controller class, with the current classroom json data, and it's corrosponding file name.
-usr_interface = user_interface_controller(session_data, filename)
+def create_student(first_name: str, last_name: str) -> Dict:
+    """Create student information represented in a dictionary
 
-msg = "\nNow interacting with %s, enter \"help\" for the list of commands\n" % (session_data["course_code"])
-print(msg)
+    Args:
+        first_name: first name of the student
+        last_name: last name of the student
+    Returns:
+        Student information as a dictionary
+    """
+    student = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "assignment_list": []
+    }
 
-#An infinite while loop for the user interaction session
-while True:
+    return student
 
-	user_input = input("\n")
+def create_assignment(name: str, due: str, points: int) -> Dict:
+    """Creates an assignment represented as a dictionary
+    
+    Args:
+        name: the name of the assignment.
+        due: the due date for the assignment.
+        points: what the assignment is out of (denominator).
+    Returns:
+        Assignment as a dictionary.
+    """
+    return {"name": name,
+            "due": due,
+            "points": points}
 
-	user_input = user_input.lower()
+def create_classroom(course_code: str, course_name: str, period: int, teacher: str) -> Dict:
+    """Creates a classroom dictionary"""
+    classroom = {"course_code": course_code,
+                 "course_name": course_name, 
+                 "period": period,
+                 "teacher": teacher, 
+                 "student_list": [], 
+                 "assignment_list": []
+                }
+    return classroom
+
+def calculate_average_mark(student: Dict, classroom: Dict) -> float:
+    """Calculates the average mark of a student"""
+    
+    sum = 0
+    length = len(student["assignment_list"])
+
+    if length is not 0:
+            
+        for i in range(length):
+
+            numerator = student["assignment_list"][i]["points"]
+            denumerator = classroom["assignment_list"][i]["points"]
+
+            sum += numerator / denumerator
+
+        return sum / length
+
+    else:
+        return -1
+        
+def add_student_to_classroom(student: Dict, classroom: Dict):
+    #Adds student to a classroom
+    classroom["student_list"].append(student)
+    pass
+
+def remove_student_from_classroom(student: Dict, classroom: Dict):
+    """Removes student from classroom
+
+    Args:
+        student: The student to be removed
+        classroom: the class from which the student will be removed.
+    """
+    classroom["student_list"].remove(student)
+    pass
+
+def add_student_mark(assignment_dict: Dict, mark: int):
+	"""Edits student assgiment info
 	
-	#If the user enters "exit", then save the data and break from the loop.
-	if user_input == "exit":
-		usr_interface.update("save")
-		break
+	Args:
+		-assignment_dict as an dictionary
+		-mark as a integer
 	
-	#Use the user_interface's update function to fufill user request.
-	usr_interface.update(user_input)
+	return:
+		-None
+	
+	"""
+
+	assignment_dict["points"] = mark
+		
+
+def edit_student(classroom: Dict, **kwargs: Dict):
+    """Edits the student's info with the provided key/value pairs
+    
+    Args:
+        student: The student whose data needs to be udated.
+        **kwargs: KeyWordARGumentS. The key/value pairs of the
+            data that needs to be changed. Can come in the form
+            of a dictionary.
+    """
+    for key in kwargs.keys():
+        student[key] = kwargs[key]
+    pass
