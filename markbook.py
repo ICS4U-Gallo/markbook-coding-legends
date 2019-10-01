@@ -5,6 +5,7 @@ Group members: Alex, Aryan, Ryan
 
 from typing import Dict
 
+
 def create_student(first_name: str, last_name: str) -> Dict:
     """Create student information represented in a dictionary
 
@@ -22,9 +23,10 @@ def create_student(first_name: str, last_name: str) -> Dict:
 
     return student
 
+
 def create_assignment(name: str, due: str, points: int) -> Dict:
     """Creates an assignment represented as a dictionary
-    
+
     Args:
         name: the name of the assignment.
         due: the due date for the assignment.
@@ -36,41 +38,44 @@ def create_assignment(name: str, due: str, points: int) -> Dict:
             "due": due,
             "points": points}
 
+
 def create_classroom(course_code: str, course_name: str, period: int, teacher: str) -> Dict:
     """Creates a classroom dictionary"""
     classroom = {"course_code": course_code,
-                 "course_name": course_name, 
+                 "course_name": course_name,
                  "period": period,
-                 "teacher": teacher, 
-                 "student_list": [], 
-                 "assignment_list": []
-                }
+                 "teacher": teacher,
+                 "student_list": [],
+                 "assignment_list": []}
     return classroom
+
 
 def calculate_average_mark(student: Dict, classroom: Dict) -> float:
     """Calculates the average mark of a student"""
-    
+
     sum = 0
     length = len(student["assignment_list"])
 
     if length is not 0:
-            
+
         for i in range(length):
 
             numerator = student["assignment_list"][i]["points"]
             denumerator = classroom["assignment_list"][i]["points"]
 
-            sum += numerator / denumerator
+            sum += int(numerator) / int(denumerator)
 
         return sum / length
 
     else:
         return -1
-        
+
+
 def add_student_to_classroom(student: Dict, classroom: Dict):
-    #Adds student to a classroom
+    # Adds student to a classroom
     classroom["student_list"].append(student)
     pass
+
 
 def remove_student_from_classroom(student: Dict, classroom: Dict):
     """Removes student from classroom
@@ -83,15 +88,15 @@ def remove_student_from_classroom(student: Dict, classroom: Dict):
     pass
 
 
-def edit_student(classroom: Dict, **kwargs: Dict):
+def edit_student(student: Dict, kwargs: Dict):
     """Edits the student's info with the provided key/value pairs
-    
+
     Args:
         student: The student whose data needs to be udated.
         **kwargs: KeyWordARGumentS. The key/value pairs of the
             data that needs to be changed. Can come in the form
             of a dictionary.
     """
-    for key in kwargs.keys():
-        student[key] = kwargs[key]
+    for key, value in kwargs.items():
+        student[key] = value
     pass
