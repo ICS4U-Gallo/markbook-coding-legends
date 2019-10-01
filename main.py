@@ -5,18 +5,18 @@ session_data, filename = initialize_session()
 
 usr_interface = user_interface_controller(session_data, filename)
 
-msg = "\nNow interacting with %s, enter \"help\" for the list of commands\n" % (session_data["course_code"])
+msg = "\nNow interacting with %s, enter \"help\" for the list of commands" % (session_data["course_code"])
 
 print(msg)
 
 while True:
 
-	user_input = input("\n")
+    user_input = input("\n")
 
-	user_input = user_input.lower()
+    user_input.lower()
 
-	if user_input == "exit":
-		usr_interface.update("save")
-		break
+    if user_input == "exit":
+        usr_interface.update("save")
+        break
 
-	usr_interface.update(user_input)
+    usr_interface.update(user_input)
